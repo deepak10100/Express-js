@@ -1,19 +1,30 @@
 const express = require('express')
-const bodyParser= require('body-parser')
-const path = require('path')
+const mongoose = require('mongoose');
 const app = express()
 const port = 3000
-app.use(bodyParser.urlencoded({ extended: false }))
+mongoose.connect('mongodb://127.0.0.1:27017/mydata')
+  .then(() => console.log('Connected!'));
 
-// parse application/json
-app.use(bodyParser.json())
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+
+const BlogPost = new Schema({
+  author: ObjectId,
+  name: String,
+  age: Number,
+  
+});
+
+const MyModel = new mongoose.model('Ticket', BlogPost);
+let add = async()=>{
+  let ss = await MyModel.updateMany({age:{$gt:15}},{$set:{age:19}})
+  console.log(ss)
+}
+add()
+
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname+'/index.html'))
-})
-app.post('/', (req, res) => {
-  // const username =req.body.name
-  console.log(req.body)
-  res.send(`name: ${req.body.name}`)
+  res.send('Hello World!')
 })
 
 app.listen(port, () => {

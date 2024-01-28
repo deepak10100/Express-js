@@ -1,10 +1,11 @@
 import expres from 'express'
-import { allUsers, createUser, deleteUser, updateUser } from '../controllers/userController.js'
+import {createUser, getUser, loginUser, logout, } from '../controllers/userController.js'
+import { isAuth } from '../middlewares/auth.js'
 const router = expres.Router()
 
 router.post('/user/createuser', createUser)
-router.get('/user/allusers', allUsers)
-router.put('/user/updateuser/:id', updateUser)
-router.delete('/user/deleteuser/:id', deleteUser)
+router.post('/user/loginuser', loginUser)
+router.get('/user/logout', logout)
+router.get('/user/me',isAuth, getUser)
 
 export default router

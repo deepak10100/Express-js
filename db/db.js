@@ -1,9 +1,6 @@
+import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
-
-
-  module.exports = connectDB =()=>{
+export let connectdb = ()=>{
     mongoose.connect(process.env.DBURL)
   .then(() => console.log('Connected!'));
-  }
-
+}
